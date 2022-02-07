@@ -34,3 +34,20 @@ body{
     font-size: 3rem;
     font-weight: 600;
 }
+
+#score{
+    text-align: center;
+    margin: auto;
+    /* background-color: #BBADA0; */
+    width: 20%;
+    margin-top: 2rem;
+    color: white;
+    display: flex;
+}
+
+#current-score, #best-score{
+    width: 100px;
+    background-color: #BBADA0;
+    border-radius: 10px;
+    margin: 0.5rem;
+}
