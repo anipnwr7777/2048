@@ -1,0 +1,36 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Poppins', sans-serif;
+    background-color: #FAF8EF;
+}
+
+#wrapper{
+    height: 480px;
+    width: 480px;
+    background-color: #BBADA0;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 4.5rem auto;
+    color: white;
+    border-radius: 10px;
+}
+
+.box{
+    background-color: #CCC0B3;
+    height: 100px;
+    width: 100px;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.text{
+    font-size: 3rem;
+    font-weight: 600;
+}
