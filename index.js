@@ -114,13 +114,65 @@ let len;
 let noOfZero;
 let finalScore = 0;
 
+function isDuplicacy(arr) {
+    let newArr = [];
+    for (let i = 0; i < arr.length; i++) {
+        if (newArr.length && newArr[newArr.length - 1] == arr[i]) {
+            return true;
+        }
+        else {
+            newArr.push(arr[i]);
+        }
+    }
+    return false;
+}
+
+function noOfBoxesFilled() {
+    let count = 0;
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            if (matrix[i][j] != 0) {
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+function isMoveAvailable() {
+    let tempArr1 = [], tempArr2 = [], tempArr3 = [], tempArr4 = [], tempArr5 = [], tempArr6 = [], tempArr7 = [], tempArr8 = [];
+    for (let i = 0; i < 4; i++) {
+        tempArr1.push(matrix[0][i]);
+        tempArr2.push(matrix[1][i]);
+        tempArr3.push(matrix[2][i]);
+        tempArr4.push(matrix[3][i]);
+        tempArr5.push(matrix[i][0]);
+        tempArr6.push(matrix[i][1]);
+        tempArr7.push(matrix[i][2]);
+        tempArr8.push(matrix[i][3]);
+    }
+    console.log(tempArr1, tempArr8);
+    if (isDuplicacy(tempArr1) || isDuplicacy(tempArr2) || isDuplicacy(tempArr3) || isDuplicacy(tempArr4) || isDuplicacy(tempArr5) || isDuplicacy(tempArr6) || isDuplicacy(tempArr7) || isDuplicacy(tempArr8)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
 function checkForGameEnd() {
     for (let i = 0; i < 4; i++) {
         let flag = false;
         for (let j = 0; j < 4; j++) {
             if (matrix[i][j] == 2048) {
                 document.removeEventListener('keyup', func);
-                alert("you win");
+                console.log("you win");
+                const outcome = document.getElementById("outcome");
+                const finalOutcome = document.createElement("h2");
+                finalOutcome.innerHTML = "you win";
+                finalOutcome.style.color = "green";
+                finalOutcome.style.textAlign = "center";
+                outcome.appendChild(finalOutcome);
                 flag = true;
                 break;
             }
@@ -138,9 +190,15 @@ function checkForGameEnd() {
             }
         }
     }
-    if (count == 16) {
+    if (count == 16 && !isMoveAvailable()) {
         document.removeEventListener('keyup', func);
-        alert("you lose");
+        const outcome = document.getElementById("outcome");
+        const finalOutcome = document.createElement("h2");
+        finalOutcome.innerHTML = "you lose";
+        finalOutcome.style.color = "red";
+        finalOutcome.style.textAlign = "center";
+        outcome.appendChild(finalOutcome);
+        console.log("you lose");
     }
 }
 
@@ -149,7 +207,7 @@ function scoreUpdate() {
     score.innerHTML = finalScore;
 }
 
-function someOpForDown() {
+function someOpForDownAndRight() {
     while (!stack1.isEmpty()) {
         let onTop = stack1.peek()[0];
         if (!stack2.isEmpty() && stack2.peek()[0] == onTop && stack2.peek()[1] == false) {
@@ -186,7 +244,7 @@ function moveDown() {
             stack1.push([matrix[i][0], false]);
         }
     }
-    someOpForDown();
+    someOpForDownAndRight();
     for (let i = 0; i < 4; i++) {
         matrix[i][0] = arr[i];
     }
@@ -198,7 +256,7 @@ function moveDown() {
             stack1.push([matrix[i][1], false]);
         }
     }
-    someOpForDown();
+    someOpForDownAndRight();
     for (let i = 0; i < 4; i++) {
         matrix[i][1] = arr[i];
     }
@@ -210,7 +268,7 @@ function moveDown() {
             stack1.push([matrix[i][2], false]);
         }
     }
-    someOpForDown();
+    someOpForDownAndRight();
     for (let i = 0; i < 4; i++) {
         matrix[i][2] = arr[i];
     }
@@ -222,7 +280,7 @@ function moveDown() {
             stack1.push([matrix[i][3], false]);
         }
     }
-    someOpForDown();
+    someOpForDownAndRight();
     for (let i = 0; i < 4; i++) {
         matrix[i][3] = arr[i];
     }
@@ -239,7 +297,7 @@ function moveRight() {
             stack1.push([matrix[0][i], false]);
         }
     }
-    someOpForDown();
+    someOpForDownAndRight();
     for (let i = 0; i < 4; i++) {
         matrix[0][i] = arr[i];
     }
@@ -251,7 +309,7 @@ function moveRight() {
             stack1.push([matrix[1][i], false]);
         }
     }
-    someOpForDown();
+    someOpForDownAndRight();
     for (let i = 0; i < 4; i++) {
         matrix[1][i] = arr[i];
     }
@@ -263,7 +321,7 @@ function moveRight() {
             stack1.push([matrix[2][i], false]);
         }
     }
-    someOpForDown();
+    someOpForDownAndRight();
     for (let i = 0; i < 4; i++) {
         matrix[2][i] = arr[i];
     }
@@ -275,7 +333,7 @@ function moveRight() {
             stack1.push([matrix[3][i], false]);
         }
     }
-    someOpForDown();
+    someOpForDownAndRight();
     for (let i = 0; i < 4; i++) {
         matrix[3][i] = arr[i];
     }
@@ -417,38 +475,55 @@ function moveUp() {
 
 function func(event) {
     console.log("key pressed")
+    let count = noOfBoxesFilled();
+
     // if up arrow
     if (event.keyCode === 38) {
         console.log("up key pressed");
         moveUp();
-        generateRandomNumber();
+        // checkForGameEnd();
+        if (count < 16) {
+            generateRandomNumber();
+        }
         updateMatrix();
         scoreUpdate();
         checkForGameEnd();
     }
+
     // if right arrow
     else if (event.keyCode === 39) {
         console.log("right");
         moveRight();
-        generateRandomNumber();
+        // checkForGameEnd();
+        if (count < 16) {
+            generateRandomNumber();
+        }
         updateMatrix();
         scoreUpdate();
         checkForGameEnd();
     }
+
     // if down arrow
     else if (event.keyCode === 40) {
         console.log("down")
         moveDown();
-        generateRandomNumber();
+        // checkForGameEnd();
+        if (count < 16) {
+            generateRandomNumber();
+        }
         updateMatrix();
         scoreUpdate();
         checkForGameEnd();
     }
+
     // if left arrow
     else if (event.keyCode === 37) {
         console.log("left")
         moveLeft();
-        generateRandomNumber();
+        // checkForGameEnd();
+        if (count < 16) {
+            generateRandomNumber();
+        }
         updateMatrix();
         scoreUpdate();
         checkForGameEnd();
