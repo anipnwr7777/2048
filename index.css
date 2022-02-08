@@ -14,7 +14,7 @@ body{
     background-color: #BBADA0;
     display: flex;
     flex-wrap: wrap;
-    margin: 4.5rem auto;
+    margin: 1rem auto;
     color: white;
     border-radius: 10px;
 }
@@ -39,10 +39,13 @@ body{
     text-align: center;
     margin: auto;
     /* background-color: #BBADA0; */
-    width: 20%;
-    margin-top: 2rem;
+    width: 30%;
+    margin-top: 1rem;
     color: white;
     display: flex;
+    /* background-color: black; */
+    justify-content: space-around;
+    align-items: center;
 }
 
 #current-score{
@@ -50,4 +53,10 @@ body{
     background-color: #BBADA0;
     border-radius: 10px;
     margin: 0.5rem;
+
+}
+
+#score > h1{
+    color: black;
+    font-size: 4rem;
 }
