@@ -68,6 +68,11 @@ function updateMatrix() {
             if (matrix[i][j] != children[index].innerHTML) {
                 children[index].innerHTML = matrix[i][j];
             }
+            if (matrix[i][j] != 0) {
+                children[index].style.color = "black";
+            } else if (matrix[i][j] == 0) {
+                children[index].style.color = "white";
+            }
             index++;
         }
     }
