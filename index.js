@@ -113,6 +113,7 @@ let arr = [];
 let len;
 let noOfZero;
 let finalScore = 0;
+let bestScore = 0;
 
 function isDuplicacy(arr) {
     let newArr = [];
@@ -199,6 +200,24 @@ function checkForGameEnd() {
         finalOutcome.style.textAlign = "center";
         outcome.appendChild(finalOutcome);
         console.log("you lose");
+
+        const playAgainButton = document.getElementById("play-again-button");
+        playAgainButton.innerHTML = "play again";
+
+        playAgainButton.onclick = function (event) {
+            // console.log("hello")
+            matrix = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+            updateMatrix();
+            playAgainButton.innerHTML = "";
+            finalOutcome.innerHTML = "";
+            document.addEventListener("keyup", func);
+            if (finalScore > bestScore) {
+                const bestScoreTemp = document.getElementById("best-score-text");
+                bestScoreTemp.innerHTML = finalScore;
+            }
+            finalScore = 0;
+            scoreUpdate();
+        }
     }
 }
 
