@@ -114,6 +114,7 @@ let len;
 let noOfZero;
 let finalScore = 0;
 let bestScore = 0;
+document.getElementById("play-again-button").style.visibility = "hidden";
 
 function isDuplicacy(arr) {
     let newArr = [];
@@ -172,8 +173,32 @@ function checkForGameEnd() {
                 const finalOutcome = document.createElement("h2");
                 finalOutcome.innerHTML = "you win";
                 finalOutcome.style.color = "green";
-                finalOutcome.style.textAlign = "center";
                 outcome.appendChild(finalOutcome);
+
+
+
+                const playAgainButton = document.getElementById("play-again-button");
+                playAgainButton.style.visibility = "visible";
+
+
+                playAgainButton.onclick = function (event) {
+                    matrix = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+                    updateMatrix();
+                    document.getElementById("play-again-button").style.visibility = "hidden";
+
+                    finalOutcome.innerHTML = "";
+                    document.addEventListener("keyup", func);
+                    if (finalScore > bestScore) {
+                        console.log("zabardasti andar aa rha", finalScore, bestScore);
+                        const bestScoreTemp = document.getElementById("best-score-text");
+                        bestScoreTemp.innerHTML = finalScore;
+                        bestScore = finalScore;
+                    }
+                    finalScore = 0;
+                    scoreUpdate();
+                }
+
+
                 flag = true;
                 break;
             }
@@ -197,23 +222,24 @@ function checkForGameEnd() {
         const finalOutcome = document.createElement("h2");
         finalOutcome.innerHTML = "you lose";
         finalOutcome.style.color = "red";
-        finalOutcome.style.textAlign = "center";
         outcome.appendChild(finalOutcome);
         console.log("you lose");
 
         const playAgainButton = document.getElementById("play-again-button");
-        playAgainButton.innerHTML = "play again";
+        playAgainButton.style.visibility = "visible";
+
 
         playAgainButton.onclick = function (event) {
-            // console.log("hello")
             matrix = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
             updateMatrix();
-            playAgainButton.innerHTML = "";
             finalOutcome.innerHTML = "";
+            document.getElementById("play-again-button").style.visibility = "hidden";
+
             document.addEventListener("keyup", func);
             if (finalScore > bestScore) {
                 const bestScoreTemp = document.getElementById("best-score-text");
                 bestScoreTemp.innerHTML = finalScore;
+                bestScore = finalScore;
             }
             finalScore = 0;
             scoreUpdate();
@@ -500,7 +526,6 @@ function func(event) {
     if (event.keyCode === 38) {
         console.log("up key pressed");
         moveUp();
-        // checkForGameEnd();
         if (count < 16) {
             generateRandomNumber();
         }
@@ -513,7 +538,6 @@ function func(event) {
     else if (event.keyCode === 39) {
         console.log("right");
         moveRight();
-        // checkForGameEnd();
         if (count < 16) {
             generateRandomNumber();
         }
@@ -526,7 +550,6 @@ function func(event) {
     else if (event.keyCode === 40) {
         console.log("down")
         moveDown();
-        // checkForGameEnd();
         if (count < 16) {
             generateRandomNumber();
         }
@@ -539,7 +562,6 @@ function func(event) {
     else if (event.keyCode === 37) {
         console.log("left")
         moveLeft();
-        // checkForGameEnd();
         if (count < 16) {
             generateRandomNumber();
         }
